@@ -7,6 +7,13 @@ html {
 body {
   font-family: 'Lexend', sans-serif;
   margin: 0;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  min-height: 100vh;
+  background: url('background.png') ;
+  background-size: cover;
+  background-position: center;
 }
 
 nav {
@@ -17,6 +24,7 @@ nav {
   padding: 0 1%;
   height: 70px;
   position: static;
+  z-index: 99;
 }
 
 .left-section {
@@ -82,9 +90,9 @@ nav p {
   display: inline-flex;
 }
 
-.background-img {
+/* .background-img {
   background-image: url("https://i.ibb.co/NsKNSF9/Be-Funky-collage.png");
-  background-size: stretch;
+  background-size: static;
   background-position: center;
   content: "";
   position: absolute;
@@ -92,7 +100,7 @@ nav p {
   height: 100%;
   z-index: -2;
   opacity: 0.8;
-}
+} */
 
 .body-text {
   display: flex;
@@ -101,11 +109,11 @@ nav p {
   height: 50vh; 
   text-align: center;
   flex-direction: column; 
-  padding: 8px 16px;
+  padding: 16px;
 }
 .body-text p1{
   font-family: Brush Script MT;
-  margin-top: 30%;
+  margin-top: 10%;
   margin-left: 15%;
   margin-right: 15%;
   font-size: 80px;
@@ -123,6 +131,7 @@ nav p {
   background: rgba(255, 220, 189, 0.3);
   border-radius: 60px;
   backdrop-filter: blur(10px);
+  padding: 16px;
 }
 
 .body-text a{
@@ -145,8 +154,9 @@ nav p {
   font-size: 20px;
   font-weight: 300;
   color: #000080;
-  background: rgba(255, 220, 189, 0.7);
+  background: rgba(255, 220, 189, 0.3);
   border-radius: 99px;
+  padding: 16px;
 }
 
 .wrapper {
