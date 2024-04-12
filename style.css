@@ -260,7 +260,7 @@ body {
       z-index: 1;
       top: 0;
       left: 0;
-      background-color: #cc4c00;
+      background-color: #fc5e00;
       overflow-x: hidden;
       transition: 0.5s;
       padding-top: 60px;
@@ -271,13 +271,13 @@ body {
       padding:  8px 8px 32px;
       text-decoration: none;
       font-size: 25px;
-      color: #000080;
+      color:  #000080;
       display: block;
       transition: 0.3s;
     }
     
     .sidebar a:hover {
-      color: #f1f1f1;
+      color: #ffdcbd;
     }
     
     .sidebar .closebtn {
@@ -302,7 +302,7 @@ body {
     }
     
     .openbtn:hover {
-      background-color: #444;
+      background-color: #fc5e00;
     }
     
     #main {
@@ -331,7 +331,7 @@ body {
       text-decoration: none;
       margin: 0;
       margin-left: 10px;
-      
+      color: #000080;
     }  
 
     form.example input[type=text] {
@@ -356,7 +356,7 @@ body {
       width: 100px;
       padding: 10px;
       border-radius: 20px;
-      background: #2196F3;
+      background:  #000080;
       color: white;
       font-size: 17px;
       border: 1px solid grey;
@@ -365,7 +365,7 @@ body {
     }
 
     form.example button:hover {
-      background: #0b7dda;
+      background:#ffdcbd ;
     }
 
     /* Clear floats */
@@ -385,6 +385,8 @@ body {
     
     }
 
+    
+
     .card {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
       max-width: 300px;
@@ -395,12 +397,15 @@ body {
     }
 
     .card .title {
-      color: #cc4c00;
+      color: #000080;
       font-size: 18px;
     }
 
-    .card p, .card h1{
-      color: #cc4c00;
+    .card p{
+      color: #000080;
+    }
+    .card h1{
+      color: #fc5e00;
     }
 
     .card button {
@@ -409,16 +414,18 @@ body {
       display: inline-block;
       padding: 8px;
       color: white;
-      background-color: #000080;
+      background-color: #cc4c00;
       text-align: center;
       cursor: pointer;
       width: 100%;
       font-size: 18px;
     }
+  
 
-    .card a {
+    .card #show-details {
       text-decoration: none;
       font-size: 10px;
+      background: transparent;
       color: #000080;
     }
 
@@ -432,5 +439,79 @@ body {
       -webkit-box-orient: vertical;
       overflow: hidden;
      
+    }
+
+    .card h1{
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    
+    }
+
+    .category-content.active{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .category-content.active .card{
+      transform: scale(0);
+      width: 0;
+      height: 0;
+      float:right;
+    }
+  
+    .category-content .wrapper {
+      position: relative;
+      width: 0px;
+      height: 0px;
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, .5);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+      display: block; 
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      transform: scale(0);
+      transition: transform .5s ease, height .5s ease;
+    }
+
+    .category-content.active .wrapper{
+      transform: scale(1);
+      width: 700px;
+      height: 300px;
+    }
+
+    .category-content .wrapper{
+      height: 490px;
+    }
+
+    .category-content .wrapper .icon-close {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45px;
+      height: 45px;
+      background: #C0C0C0;
+      font-size: 2em;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    .category-content .wrapper .form-box {
+      width: 100%;
+      padding: 40px;
     }
 /* END STYLE FOR CATEGORY */
