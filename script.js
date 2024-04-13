@@ -46,7 +46,7 @@ let cats = [];
           <div class="card">
             <img src="${cat.categories[i].strCategoryThumb}" alt="John" style="width:100%">
             <h1>${cat.categories[i].strCategory}</h1>
-            <p class="title">Sunmmary</p>
+            <p class="title">Summary</p>
             <p class="details">${cat.categories[i].strCategoryDescription}</p>
             <button id="show-details" onclick="ShowDetails('${cat.categories[i].strCategory}')"> Show More</button>
             <p><button onclick="renderRecipes('${cat.categories[i].strCategory}')">Show ${cat.categories[i].strCategory} Recipes</button></p>
@@ -75,12 +75,12 @@ let cats = [];
                 <h1>${state[i].meals[r].strMeal}</h1>
                 <p class="title">Details:</p>
                 <p class="details">${state[i].meals[r].strInstructions}</p>
-                <div style="margin: 24px 0;">
-                  <a href="#"><ion-icon name="reader"></ion-icon></i></a> 
-                  <a href="#"><ion-icon name="star"></ion-icon></a>  
-                  <a href="#"><ion-icon name="star-outline"></ion-icon></i></a>  
+                <div style="margin: 24px 0;" class="small-icons" id="icons">
+                  <a href="${state[i].meals[r].strYoutube}"><i class="fa fa-youtube-play" style="font-size:24px"></i> 
+                  <a href="javascript:unfavorite();" ><ion-icon name="star" style="font-size:24px"  id="favorite"></ion-icon></a>  
+                  <a href="javascript:favorite();" ><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>  
                 </div>
-                <p><button>ShowRecipes</button></p>
+                <p><button onclick="ShowRecipe('${state[i].meals[r].strMeal}')">ShowRecipes</button></p>
               </div>
               `;
     
@@ -89,7 +89,6 @@ let cats = [];
         }
       }
   
-      console.log(category)
       title.innerHTML = `Lets see...${category} Recipes`; 
       card.innerHTML = html;
     }
@@ -138,30 +137,71 @@ let cats = [];
 
 //END CATEGORY FUNCTIONS
 
+//------------>Category Detail Functions<--------------------//
+    function ShowDetails (category){
+      const content = document.getElementById('content');
+    
+      let html = '';
+      
+      for(let i = 0; i < cats.categories.length; i = i + 1){
+        if(cats.categories[i].strCategory == category){
+          html = `
+          <div class="wrapper">
+            <button class="icon-close" onclick="hideDetails()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+        
+            
+             <h1>Description</h1>
+             <p>${cats.categories[i].strCategoryDescription}</p>
+                
+                
+            
+          </div>
+        
+          `;
+        }
+      }
+      content.innerHTML = html;
+    
+      content.classList.add('active');
+    }
+    
+    function hideDetails(){
+      const content = document.getElementById('content');
+      
+      renderCard(cats);
+      content.classList.remove('active');
+    }
 
-function ShowDetails (category){
+//--------------->Recipe Detail Functions<--------------------//
+
+function ShowRecipe (name){
   const content = document.getElementById('content');
-  const card = document.getElementsByClassName('card');
 
   let html = '';
-  
-  for(let i = 0; i < cats.categories.length; i = i + 1){
-    if(cats.categories[i].strCategory == category){
-      html = `
-      <div class="wrapper">
-        <button class="icon-close" onclick="hideDetails()">
-          <ion-icon name="close"></ion-icon>
-        </button>
-    
-        
-         <h1>Description</h1>
-         <p>${cats.categories[i].strCategoryDescription}</p>
-            
-            
-        
-      </div>
-    
-      `;
+
+  for(let i = 0; i < state.length; i = i + 1){
+    if(state[i].meals !== null){
+      for(let r = 0; r < state[i].meals.length; r = r + 1){
+        if(name === state[i].meals[r].strMeal){
+          html = `
+          <div class="wrapper">
+            <button class="icon-close" onclick="hideRecipe('${state[i].meals[r].strCategory}')">
+              <ion-icon name="close"></ion-icon>
+            </button>
+
+             <h1>${state[i].meals[r].strMeal}</h1>
+             <h2>Recipe</h2>
+             <p>${state[i].meals[r].strInstructions}</p>
+
+
+
+          </div>
+
+          `;
+        }
+      }
     }
   }
   content.innerHTML = html;
@@ -169,14 +209,25 @@ function ShowDetails (category){
   content.classList.add('active');
 }
 
-function hideDetails(){
+function hideRecipe(category){
   const content = document.getElementById('content');
-  
-  renderCard(cats);
+
+  renderRecipes(category);
   content.classList.remove('active');
 }
 
+// function favorite(){
+//   const icon = document.getElementById('icons');
 
+//   icon.classList.add('active');
+  
+// }
+
+// function unfavorite(){
+//   const icon = document.getElementById('icons');
+
+//   icon.classList.remove('active');
+// }
 
 
     
