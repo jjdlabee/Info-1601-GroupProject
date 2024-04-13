@@ -1,20 +1,4 @@
-// function checklogin(){
-//   let i = 0;
-//   let html = '';
 
-//   const header = document.querySelector('#header');
-
-//   // html = `
-//   //    <button class="btnLogin-popup" id="login">Login</button>
-//   // `;
-
-//   if(i === 0){
-//     header.innerHTML = header.innerHTML + html;
-//   }
-
-// }
-
-// checklogin();
 
 // NAV CODE
     function openNav() {
@@ -36,20 +20,20 @@ let cats = [];
 
 //CATEGORY CARD CODE
 
-    function renderCard(cat){
+    function renderCategories(categories){
       const card = document.getElementById('content');
       const title = document.getElementById('head-text');
       let html = '';
       
-      for(let i = 0; i < cat.categories.length; i = i + 1){
+      for(let i = 0; i < categories.length; i = i + 1){
         html += `
           <div class="card">
-            <img src="${cat.categories[i].strCategoryThumb}" alt="John" style="width:100%">
-            <h1>${cat.categories[i].strCategory}</h1>
+            <img src="${categories[i].strCategoryThumb}" alt="John" style="width:100%">
+            <h1>${categories[i].strCategory}</h1>
             <p class="title">Summary</p>
-            <p class="details">${cat.categories[i].strCategoryDescription}</p>
-            <button id="show-details" onclick="ShowDetails('${cat.categories[i].strCategory}')"> Show More</button>
-            <p><button onclick="renderRecipes('${cat.categories[i].strCategory}')">Show ${cat.categories[i].strCategory} Recipes</button></p>
+            <p class="details">${categories[i].strCategoryDescription}</p>
+            <button id="show-details" onclick="ShowDetails('${categories[i].strCategory}')"> Show More</button>
+            <p><button onclick="renderCatRecipes('${categories[i].strCategory}')">Show ${categories[i].strCategory} Recipes</button></p>
           </div>
         `;
       }
@@ -59,37 +43,67 @@ let cats = [];
     }
     
 
-    function renderRecipes(category){
+    function renderCatRecipes(category){
       const card = document.getElementById('content');
       const title = document.getElementById('head-text');
+      const search = document.getElementById('search-bar');
     
       let html = '';
-    
+      let searchBtn = '';
+
       for(let i = 0; i < state.length; i = i + 1){
-        if(state[i].meals !== null){
-          for(let r = 0; r < state[i].meals.length; r = r + 1){
-            if(category === state[i].meals[r].strCategory){
-              html += `
-              <div class="card">
-                <img src="${state[i].meals[r].strMealThumb}" alt="John" style="width:100%">
-                <h1>${state[i].meals[r].strMeal}</h1>
-                <p class="title">Details:</p>
-                <p class="details">${state[i].meals[r].strInstructions}</p>
-                <div style="margin: 24px 0;" class="small-icons" id="icons">
-                  <a href="${state[i].meals[r].strYoutube}"><i class="fa fa-youtube-play" style="font-size:24px"></i> 
-                  <a href="javascript:unfavorite();" ><ion-icon name="star" style="font-size:24px"  id="favorite"></ion-icon></a>  
-                  <a href="javascript:favorite();" ><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>  
-                </div>
-                <p><button onclick="ShowRecipe('${state[i].meals[r].strMeal}')">ShowRecipes</button></p>
-              </div>
-              `;
-    
-            }
-          }
+        if(category === state[i].strCategory){
+          html += `
+          <div class="card">
+            <img src="${state[i].strMealThumb}" alt="John" style="width:100%">
+            <h1>${state[i].strMeal}</h1>
+            <p class="title">Details:</p>
+            <p class="details">${state[i].strInstructions}</p>
+            <div class="small-icons" id="icons">
+              <a href="${state[i].strYoutube}"><i class="fa fa-youtube-play" style="font-size:24px"></i> 
+                
+              <a href="javascript:favorite();" ><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>  
+            </div>
+            <p><button onclick="ShowRecipe('${state[i].strMeal}')">ShowRecipes</button></p>
+          </div>
+          `;
         }
       }
-  
+
+      searchBtn = `
+          <input type="text" placeholder="Search ${category} Recipes..." id="searchKey">
+          <button onclick=searchCatRecipes('${category}') ><i class="fa fa-search"></i></button>
+        `;
+
+      search.innerHTML = searchBtn;
       title.innerHTML = `Lets see...${category} Recipes`; 
+      card.innerHTML = html;
+    }
+
+
+    function renderAllRecipes(recipes){
+      const card = document.getElementById('content');
+      const title = document.getElementById('head-text');
+      let html = '';
+  
+      for(let i = 0; i < recipes.length; i = i + 1){
+        html += `
+        <div class="card">
+          <img src="${recipes[i].strMealThumb}" alt="John" style="width:100%">
+          <h1>${recipes[i].strMeal}</h1>
+          <p class="title">Details:</p>
+          <p class="details">${recipes[i].strInstructions}</p>
+          <div class="small-icons" id="icons">
+            <a href="${recipes[i].strYoutube}"><i class="fa fa-youtube-play" style="font-size:24px"></i> 
+
+            <a href="javascript:favorite();" ><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>  
+          </div>
+          <p><button onclick="ShowRecipe('${recipes[i].strMeal}')">ShowRecipes</button></p>
+        </div>
+        `;
+      }
+
+      title.innerHTML = `Lets see...Recipes`; 
       card.innerHTML = html;
     }
 
@@ -126,10 +140,24 @@ let cats = [];
 
 
     async function getAllRecipes(){
-      state = await getData();
-    
-      cats = await getCategory();
-      renderCard(cats);
+      let tempState = await getData();
+      let t = 0;
+
+      for(let i = 0; i < tempState.length; i = i + 1){
+        if(tempState[i].meals !== null){
+          for(let r = 0; r < tempState[i].meals.length; r = r + 1){
+            state[t] = tempState[i].meals[r];
+            t = t + 1;
+          }
+        }
+      }
+
+      
+      let tempCat = await getCategory();
+
+      cats = tempCat.categories;
+
+      renderCategories(cats);
     }
     
     
@@ -143,22 +171,16 @@ let cats = [];
     
       let html = '';
       
-      for(let i = 0; i < cats.categories.length; i = i + 1){
-        if(cats.categories[i].strCategory == category){
+      for(let i = 0; i < cats.length; i = i + 1){
+        if(cats[i].strCategory == category){
           html = `
           <div class="wrapper">
             <button class="icon-close" onclick="hideDetails()">
               <ion-icon name="close"></ion-icon>
             </button>
-        
-            
              <h1>Description</h1>
-             <p>${cats.categories[i].strCategoryDescription}</p>
-                
-                
-            
+             <p>${cats[i].strCategoryDescription}</p>
           </div>
-        
           `;
         }
       }
@@ -170,7 +192,7 @@ let cats = [];
     function hideDetails(){
       const content = document.getElementById('content');
       
-      renderCard(cats);
+      renderCategories(cats);
       content.classList.remove('active');
     }
 
@@ -182,59 +204,120 @@ function ShowRecipe (name){
   let html = '';
 
   for(let i = 0; i < state.length; i = i + 1){
-    if(state[i].meals !== null){
-      for(let r = 0; r < state[i].meals.length; r = r + 1){
-        if(name === state[i].meals[r].strMeal){
-          html = `
-          <div class="wrapper">
-            <button class="icon-close" onclick="hideRecipe('${state[i].meals[r].strCategory}')">
-              <ion-icon name="close"></ion-icon>
-            </button>
-
-             <h1>${state[i].meals[r].strMeal}</h1>
-             <h2>Recipe</h2>
-             <p>${state[i].meals[r].strInstructions}</p>
-
-
-
-          </div>
-
-          `;
-        }
-      }
+    if(name === state[i].strMeal){
+      html = `
+      <div class="wrapper">
+        <button class="icon-close" onclick="hideRecipe('${state[i].strCategory}')">
+          <ion-icon name="close"></ion-icon>
+        </button>
+         <h1>${state[i].strMeal}</h1>
+         <h2>Recipe</h2>
+         <p>${state[i].strInstructions}</p>
+      </div>
+      `;
     }
   }
   content.innerHTML = html;
-
   content.classList.add('active');
 }
 
 function hideRecipe(category){
   const content = document.getElementById('content');
 
-  renderRecipes(category);
+  renderCatRecipes(category);
   content.classList.remove('active');
 }
 
-// function favorite(){
-//   const icon = document.getElementById('icons');
+function favorite(){
+  const icon = document.getElementById('icons');
 
-//   icon.classList.add('active');
+  let html = '';
+
+  html = `
+    <a href="javascript:favorite();" style=" position: absolute; transform: scale(1); right: 70px;"><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>
+  `;
   
-// }
+  icon.innerHTML-= html;
 
-// function unfavorite(){
-//   const icon = document.getElementById('icons');
+  html = `
+    <a href="javascript:unfavorite(); " ><ion-icon name="star" style="font-size:24px"  id="favorite" style="position: absolute; transform: scale(1); right: 70px;"></ion-icon></a>
+  `;
 
-//   icon.classList.remove('active');
-// }
+  icon.innerHTML += 
+  icon.classList.add('active');
+}
+
+function unfavorite(){
+  const icon = document.getElementById('icons');
+
+  icon.classList.remove('active');
+}
 
 
+function searchCategories(){
+  let searchKey = document.querySelector('#searchKey').value;
+
+  let results = [];
+
+  for(let rec of cats){
+    let searchText = rec.strCategory.toUpperCase();
+    searchKey = searchKey.toUpperCase();
+
+    if ( searchText.search(searchKey) !== -1 ){
+      results.push(rec);
+    }
+    renderCategories(results);
+  }
+}
+
+function searchCatRecipes(category){
+  let searchKey = document.querySelector('#searchKey').value;
+  let results = [];
+
+  for(let rec of state){
+    let searchText = rec.strMeal.toUpperCase();
+    searchKey = searchKey.toUpperCase();
     
+    if ( searchText.search(searchKey) !== -1 ){
+      if(rec.strCategory === category){
+        results.push(rec);
+      }
+    }
+    renderAllRecipes(results);
+  }
+}
+
+async function searchAllRecipes(){
+  let searchKey = document.querySelector('#searchKey').value;
+
+  let results = [];
+
+  window.location.href = "categories.html";
+
+  await renderAllRecipes();
+  
+  for(let rec of state){
+
+    let searchText = rec.strMeal.toUpperCase();
+    searchKey = searchKey.toUpperCase();
+
+    if ( searchText.search(searchKey) !== -1 ){
+      results.push(rec);
+    }
+
+    renderAllRecipes(results);
+  }
+}
+
+function catBackBtn (){
+  renderCategories(cats);
+}
 
 
 
-
+function AllRecipes(){
+  renderAllRecipes(state);
+}
 
 // let i;
 

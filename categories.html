@@ -10,10 +10,17 @@
 
   <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <br>
     <a href="index.html">Home</a>
-    <a href="categories.html">Categories</a>
+    <br>
+    <a href="javascript:catBackBtn();">Categories</a>
+    <br>
+    <a href="javascript:AllRecipes();">All Recipes</a>
+    <br>
     <a href="login.html">Login</a>
+    <br>
     <a href="signup.html">SignUp</a>
+    <br>
   </div>
   
   <div class="category-main" id="main">
@@ -23,10 +30,10 @@
       
         <h1 class="head-text" id="head-text">Lets see...LOADING...</h1>
      
-      <form class="example" action="action_page.php">
-        <input type="text" placeholder="Search.." name="search" id="searchKey">
-        <button type="submit" onclick=search()><i class="fa fa-search"></i></button>
-      </form>
+      <div class="example" id="search-bar">
+        <input type="text" placeholder="Search Categories.." id="searchKey">
+        <button onclick=searchCategories() ><i class="fa fa-search"></i></button>
+      </div>
       
     </div>
     

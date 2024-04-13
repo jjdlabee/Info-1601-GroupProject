@@ -18,12 +18,10 @@
   <nav>
     <div class="left-section">
       <p>Let's See... </p>
-      <form>
         <div class="search">
-          <span class="material-symbols-outlined">search</span>
-          <input class="search-input" type="search" placeholder="Search...">
+          <span class="material-symbols-outlined" onclick="searchAllRecipes()">search</span>
+          <input class="search-input" type="search" placeholder="Search..." id="searchKey">
         </div>
-      </form>
     </div>
 
     <div class="right-section">
@@ -38,7 +36,7 @@
   
    <div class="background-img"></div>
   
-   <div class=body-text>  
+   <div class="body-text" id="body-text">  
     <p1>Thousands of recipies ready all within your touch..</p1>
       <br>
     <p2>What are you cooking today?</p2>
