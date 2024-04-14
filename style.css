@@ -91,6 +91,16 @@ body {
         background: transparent;
         display: inline-flex;
       }
+      nav img {
+        max-height: 50px;
+        max-width: 100%;
+        padding: 5px;
+      }
+
+      nav img:hover {
+        transform: scale(1.05);
+        background: transparent;
+      }
 
 @media screen and (max-width: 768px) {
   nav {
@@ -323,6 +333,11 @@ body {
       top: 0;
       left: 0;
       font-size: 36px;
+    }
+
+    #a1:hover {
+      background:transparent;
+      scale: 1.05;
     }
     
     .openbtn {
@@ -596,6 +611,7 @@ body {
       overflow: hidden;
       transform: scale(0);
       transition: transform .5s ease, height .5s ease;
+      font-weight: 600;
     }
 
     .category-content.active .wrapper{
@@ -641,6 +657,7 @@ body {
       width: 100%;
       padding: 40px;
     }
+    
 /* END STYLE FOR CATEGORY */
 
     .small-icons{
