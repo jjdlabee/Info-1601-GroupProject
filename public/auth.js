@@ -5,14 +5,14 @@ import {
   signInAnonymously, 
   setPersistence, 
   browserLocalPersistence, 
-  onAuthStateChanged 
+  onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth();
+const auth = getAuth(app);
 
 function setAuthListeners(onLogin, onLogout){
   onAuthStateChanged(auth, user => {
@@ -23,6 +23,16 @@ function setAuthListeners(onLogin, onLogout){
     }
   });
 }
+
+// const loginEmailPassword = async () => {
+//   const loginEmail = txtEmail.value;
+//   const loginPassword = txtPassword.value;
+
+//   const userCredential = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+//   console.log(userCredential.user);
+// }
+
+// loginBtn.addEventListener("click", loginEmailPassword)
 
 async function signIn(){
   try{

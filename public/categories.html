@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Recipes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 <body>
@@ -15,11 +16,15 @@
     <br>
     <a href="javascript:catBackBtn();">Categories</a>
     <br>
-    <a href="javascript:AllRecipes();">All Recipes</a>
+    <a href="javascript:AllRecipes();" id="showAll">All Recipes</a>
     <br>
-    <a href="login.html">Login</a>
+    <a href="#" id="loginBtn">Login</a>
     <br>
-    <a href="signup.html">SignUp</a>
+    <a href="#" id="logoutBtn">Logout</a>
+    <br>
+    <p id="user">
+      Welcome Anonymous
+    </p>
     <br>
     <a href="index.html" id="a1">
       <img src="logo.png" alt="Your Logo">
@@ -43,7 +48,7 @@
     
     <div class="category-content" id="content">
       <div class="card">
-        <img src="${state[i].meals[r].strMealThumb}" alt="Loading..." style="width:100%">
+        <img src="#" alt="Loading..." style="width:100%">
         <h1>Loading...</h1>
         <p class="title">Details:</p>
         <p class="details">Loading...</p>
@@ -60,11 +65,59 @@
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-<script>
 
+  <script type="module">
+    import { signIn, logout, auth, setAuthListeners } from './auth.js';
 
-  
-</script>
-  
+      let loginBtn = document.querySelector('#loginBtn');
+      let logoutBtn = document.querySelector('#logoutBtn');
+      let showAll= document.querySelector('#showAll');
+      
+
+      async function setLoggedInUI(){
+        console.log("login")
+          
+          wait();
+          getAllRecipesIn();
+          document.querySelector('#loginBtn').style.display = 'none';
+          document.querySelector('#logoutBtn').style.display = 'inline-block';
+          document.querySelector('#showAll').style.display = 'inline-block';
+          document.querySelector('#user').style.display = 'inline-block';
+          document.querySelector('#user').style.color = '#000080';
+      }
+
+      async function setLoggedOutUI(){
+          wait();
+          getAllRecipesOut();
+          document.querySelector('#loginBtn').style.display = 'inline-block';
+          document.querySelector('#logoutBtn').style.display = 'none';
+          document.querySelector('#showAll').style.display = 'none';
+      }
+
+      //attatch listeners
+      logoutBtn.addEventListener('click', logout);
+      loginBtn.addEventListener('click', signIn);
+      showAll.addEventListener('click', signIn);
+      setAuthListeners(setLoggedInUI, setLoggedOutUI);
+
+      function wait(){
+        let card= document.querySelector('#content');
+
+        let html = '';
+
+        html = `
+          <div class="card">
+          <img src="#" alt="Loading..." style="width:100%">
+          <h1>Loading...</h1>
+          <p class="title">Details:</p>
+          <p class="details">Loading...</p>
+          <button id="show-details"> Loading...</button>
+          <p><button>Loading...</button></p>
+        </div>
+        `;
+
+        card.innerHTML = html;
+      }
+  </script>
 </body>
 </html> 

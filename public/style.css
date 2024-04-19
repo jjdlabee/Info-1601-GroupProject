@@ -51,6 +51,10 @@ nav a {
   margin: 0 4px;
 }
 
+#user{
+  color: #000080;
+}
+
 nav a.active {
   background: #cc4c00;
 }
@@ -93,7 +97,6 @@ nav p {
 nav img {
   max-height: 50px;
   max-width: 100%;
-  padding: 20px 20px 15px 0%;
 }
 
 nav img:hover {
@@ -332,6 +335,14 @@ nav img:hover {
       color:  #000080;
       display: block;
       transition: 0.3s;
+    }
+
+    .sidebar p {
+      padding:  6px 6px 6px;
+      text-decoration: none;
+      font-size: 20px;
+      color:  #000080;
+      display: block;
     }
     
     .sidebar a:hover {
