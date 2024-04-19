@@ -104,7 +104,10 @@
                   <p class="details">${state[i].strInstructions}</p>
                   <div class="small-icons" id="icons">
                     <a href="${state[i].strYoutube}"><i class="fa fa-youtube-play" style="font-size:24px"></i></a>
-                      
+                    
+                    <span id="${state[i].strMeal}">
+                      <a onclick="favorite('${state[i].strMeal}')" ><ion-icon  name="star-outline"></ion-icon></a>
+                    </span>  
                   
                   </div>
                   <p><button onclick="ShowRecipe('${state[i].strMeal}')">ShowRecipes</button></p>
@@ -286,23 +289,19 @@
         content.classList.remove('active');
       }
 
-      function favorite(){
-        const icon = document.getElementById('icons');
+      function favorite(name){
+        const icon = document.getElementById('name');
 
         let html = '';
 
         html = `
-          <a href="javascript:favorite();" style=" position: absolute; transform: scale(1); right: 70px;"><ion-icon name="star-outline" style="font-size:24px"  id="unfavorite"></ion-icon></i></a>
+          <a ><ion-icon  name="star"></ion-icon></a>
         `;
+
+        console.log(icon.innerHTML)
         
-        icon.innerHTML-= html;
+        icon.innerHTML = html;
 
-        html = `
-          <a href="javascript:unfavorite(); " ><ion-icon name="star" style="font-size:24px"  id="favorite" style="position: absolute; transform: scale(1); right: 70px;"></ion-icon></a>
-        `;
-
-        icon.innerHTML += 
-        icon.classList.add('active');
       }
 
       function unfavorite(){
